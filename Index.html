@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buggy Sales Calculation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .input-box {
+            margin-bottom: 15px;
+        }
+        .input-box label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .input-box input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .result {
+            margin-top: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Buggy Sales Calculation</h2>
+        <div class="input-box">
+            <label>Total Buggies: 173</label>
+        </div>
+        <div class="input-box">
+            <label for="soldMWWE">Total Sold (MW/WE):</label>
+            <input type="number" id="soldMWWE" oninput="calculate()">
+        </div>
+        <div class="input-box">
+            <label for="soldWeeks">Total Sold (Weeks):</label>
+            <input type="number" id="soldWeeks" oninput="calculate()">
+        </div>
+        <div class="input-box">
+            <label for="offline">Offline:</label>
+            <input type="number" id="offline" oninput="calculate()">
+        </div>
+        <div class="input-box">
+            <label>Contingency Buggies: 3</label>
+        </div>
+        <div class="result" id="result">Total Left to Sell: 0</div>
+    </div>
+
+    <script>
+        function calculate() {
+            const totalBuggies = 173;
+            const contingencyBuggies = 3;
+
+            const soldMWWE = parseFloat(document.getElementById('soldMWWE').value) || 0;
+            const soldWeeks = parseFloat(document.getElementById('soldWeeks').value) || 0;
+            const offline = parseFloat(document.getElementById('offline').value) || 0;
+
+            const totalLeftToSell = totalBuggies - (soldMWWE + soldWeeks + offline + contingencyBuggies);
+            document.getElementById('result').textContent = `Total Left to Sell: ${totalLeftToSell}`;
+        }
+    </script>
+</body>
+</html>
