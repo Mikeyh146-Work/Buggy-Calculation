@@ -3,75 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buggy Sales Calculation</title>
+    <title>Buggy Availability Calculator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
         }
-        .container {
-            max-width: 400px;
-            margin: auto;
-            padding: 20px;
+        .calculator {
             border: 1px solid #ccc;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            width: 400px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        .input-box {
+        .calculator h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .input-group {
             margin-bottom: 15px;
         }
-        .input-box label {
+        .input-group label {
             display: block;
             margin-bottom: 5px;
+            color: #555;
+            font-weight: bold;
         }
-        .input-box input {
+        .input-group input {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
         }
         .result {
-            margin-top: 15px;
-            font-size: 1.2em;
+            margin-top: 20px;
             font-weight: bold;
+            text-align: center;
+            font-size: 18px;
+            color: red;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Buggy Sales Calculation</h2>
-        <div class="input-box">
-            <label>Total Buggies: 173</label>
+
+    <div class="calculator">
+        <h2>Buggy Availability Calculator</h2>
+        <div class="input-group">
+            <label>Total Sold (MW/WE)</label>
+            <input type="number" id="mwweSold" value="0" placeholder="Enter MW/WE Sold">
         </div>
-        <div class="input-box">
-            <label for="soldMWWE">Total Sold (MW/WE):</label>
-            <input type="number" id="soldMWWE" oninput="calculate()">
+        <div class="input-group">
+            <label>Total Sold (Weeks)</label>
+            <input type="number" id="weeksSold" value="0" placeholder="Enter Weeks Sold">
         </div>
-        <div class="input-box">
-            <label for="soldWeeks">Total Sold (Weeks):</label>
-            <input type="number" id="soldWeeks" oninput="calculate()">
+        <div class="input-group">
+            <label>Offline</label>
+            <input type="number" id="offline" value="0" placeholder="Enter Offline Buggies">
         </div>
-        <div class="input-box">
-            <label for="offline">Offline:</label>
-            <input type="number" id="offline" oninput="calculate()">
+        <div class="result">
+            Total Left to Sell: <span id="leftToSell">0</span>
         </div>
-        <div class="input-box">
-            <label>Contingency Buggies: 3</label>
-        </div>
-        <div class="result" id="result">Total Left to Sell: 0</div>
     </div>
 
     <script>
-        function calculate() {
+        function updateCalculator() {
             const totalBuggies = 173;
-            const contingencyBuggies = 3;
+            const contingency = 3;
 
-            const soldMWWE = parseFloat(document.getElementById('soldMWWE').value) || 0;
-            const soldWeeks = parseFloat(document.getElementById('soldWeeks').value) || 0;
-            const offline = parseFloat(document.getElementById('offline').value) || 0;
+            const mwweSold = parseInt(document.getElementById('mwweSold').value) || 0;
+            const weeksSold = parseInt(document.getElementById('weeksSold').value) || 0;
+            const offline = parseInt(document.getElementById('offline').value) || 0;
 
-            const totalLeftToSell = totalBuggies - (soldMWWE + soldWeeks + offline + contingencyBuggies);
-            document.getElementById('result').textContent = `Total Left to Sell: ${totalLeftToSell}`;
+            const leftToSell = totalBuggies - (mwweSold + weeksSold + offline + contingency);
+            document.getElementById('leftToSell').textContent = leftToSell;
         }
+
+        document.getElementById('mwweSold').addEventListener('input', updateCalculator);
+        document.getElementById('weeksSold').addEventListener('input', updateCalculator);
+        document.getElementById('offline').addEventListener('input', updateCalculator);
     </script>
+
 </body>
 </html>
